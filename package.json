@@ -1,10 +1,11 @@
 {
   "scripts": {
-    "start": "nodemon app",
-    "standard": "npx standard",
-    "snazzy": "npx standard --verbose | npx snazzy",
+    "dev": "nodemon ./bin/www",
     "lint": "eslint . --fix",
-    "test": "jest --detectOpenHandles"
+    "test": "jest --detectOpenHandles --runInBand --forceExit --coverage --verbose --watchAll",
+    "docker": "NODE_ENV=docker && node ./bin/www.js",
+    "docker-test": "NODE_ENV=docker_test && npx sequelize-cli db:create --env docker_test && npx sequelize-cli db:migrate --env docker_test && jest --detectOpenHandles --runInBand --forceExit --coverage --verbose",
+    "ci-test": "NODE_ENV=test && npx sequelize-cli db:create --env test && npx sequelize-cli db:migrate --env test && jest --detectOpenHandles --runInBand --forceExit --coverage --verbose"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
@@ -13,6 +14,7 @@
     "morgan": "^1.10.0",
     "pg": "^8.11.3",
     "sequelize": "^6.37.1",
+    "sequelize-cli": "^6.6.2",
     "supertest": "^6.3.4"
   },
   "devDependencies": {

@@ -7,7 +7,7 @@ const DEFAULT_PAGE = 1;
 /**
  * Service class for handling todoController.
  */
-class TodoService {
+class ActivityService {
   /**
    * Retrieves all todo with optional pagination and name filtering.
    * @param {Object} params - Parameters object.
@@ -131,13 +131,6 @@ class TodoService {
         const errorMessage = {name: 'ErrorNotFound', message: 'Todo Not Found'};
         throw errorMessage;
       }
-      if (!name) {
-        const errorRequiredField = {
-          name: 'BadRequest',
-          message: 'required field name',
-        };
-        throw errorRequiredField;
-      }
       return {message: 'Success update todo'};
     } catch (error) {
       throw error;
@@ -155,14 +148,14 @@ class TodoService {
       const {id} = params;
       const todo = await TodoRepository.destroy(id);
       if (!todo) {
-        const errorMessage = {name: 'ErrorNotFound', message: 'Todo Not Found'};
+        const errorMessage = {name: 'ErrorNotFound', message: 'Todo not found'};
         throw errorMessage;
       }
-      return {message: 'Success delete todo'};
+      return {message: 'Success delete todo', data: todo};
     } catch (error) {
       throw error;
     }
   }
 }
 
-module.exports = TodoService;
+module.exports = ActivityService;
