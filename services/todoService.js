@@ -63,7 +63,6 @@ class TodoService {
         totalPages,
       };
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }
