@@ -1,11 +1,11 @@
 {
   "scripts": {
-    "dev": "nodemon ./bin/www",
+    "dev": "NODE_ENV=development && nodemon ./bin/www",
     "lint": "eslint . --fix",
-    "test": "jest --detectOpenHandles --runInBand --forceExit --coverage --verbose --watchAll",
+    "test": "NODE_ENV=test && jest --detectOpenHandles --runInBand --forceExit --coverage --verbose --watchAll",
     "docker": "NODE_ENV=docker && node ./bin/www.js",
     "docker-test": "NODE_ENV=docker_test && npx sequelize-cli db:create --env docker_test && npx sequelize-cli db:migrate --env docker_test && jest --detectOpenHandles --runInBand --forceExit --coverage --verbose",
-    "ci-test": "NODE_ENV=test && npx sequelize-cli db:create --env test && npx sequelize-cli db:migrate --env test && jest --detectOpenHandles --runInBand --forceExit --coverage --verbose"
+    "ci-test": "NODE_ENV=ci_test && npx sequelize-cli db:create --env ci_test && npx sequelize-cli db:migrate --env ci_test && jest --detectOpenHandles --runInBand --forceExit --coverage --verbose"
   },
   "dependencies": {
     "dotenv": "^16.4.5",

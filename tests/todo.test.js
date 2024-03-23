@@ -81,6 +81,23 @@ describe('GET List todo /api/todos', ()=>{
           done(err);
         });
   });
+  test('Get all data with search name', (done) => {
+    request(app)
+        .get(`${BASE_URL}?name=AA`)
+        .expect(200)
+        .then((response) => {
+          expect(response.body.message).toBe('Success get all data');
+          expect(response.body.totalData).toEqual(1);
+          expect(response.body.currentPage).toBe(1);
+          expect(response.body.nextPage).toBeNull();
+          expect(response.body.prevPage).toBeNull();
+          expect(response.body.totalPages).toEqual(1);
+          done();
+        })
+        .catch((err)=>{
+          done(err);
+        });
+  });
 });
 
 describe('Get todo by id /api/todos/:id', () =>{
@@ -176,11 +193,15 @@ describe('Update todo by id /api/todos/:id', () =>{
         });
   });
   test('PUT todo (name not filled)', (done) => {
+    const fieldName = {
+      name: '',
+    };
     request(app)
-        .put('/api/todos/9999')
-        .expect(404)
+        .put('/api/todos/1001')
+        .expect(400)
+        .send(fieldName)
         .then((response) => {
-          expect(response.body.message).toBe('Todo Not Found');
+          expect(response.body.message).toBe('required field name');
           done();
         })
         .catch((err)=>{
